@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: simplewebapp 
+    env: production
+  name: simplewebapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simplewebapp
+      env: production
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+    spec:
+      containers:
+      - image: quay.io/chris_ricci/simplewebapp:v21
+        imagePullPolicy: IfNotPresent
+        name: simplewebapp
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

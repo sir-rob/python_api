@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: python-api 
+    env: canary
+  name: python-api-canary
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: python-api
+        env: canary
+    spec:
+      containers:
+      - image: quay.io/chris_ricci/python_api:v1
+        imagePullPolicy: IfNotPresent
+        name: python-api
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
