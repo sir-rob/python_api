@@ -18,7 +18,7 @@ node {
 //  stage 'Run Go tests '
 //  sh("docker run ${imageTag} go test")
 
-  stage 'Push image to registry'
+  stage 'Push image to Quay.io registry'
   sh("docker push ${imageTag}")
 
   stage "Deploy Application"
